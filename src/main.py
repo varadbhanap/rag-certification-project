@@ -1,8 +1,13 @@
 import os
 from dotenv import load_dotenv
 
+# --- OLD IMPORTS (some will be replaced) ---
+# from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+
+# +++ NEW IMPORTS FOR GOOGLE +++
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
+
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain.prompts import ChatPromptTemplate
@@ -10,17 +15,22 @@ from langchain.schema.runnable import RunnablePassthrough
 from langchain.schema.output_parser import StrOutputParser
 
 # --- 1. Load Environment Variables ---
-# Load environment variables from a .env file
 load_dotenv()
 
-# Ensure the OpenAI API key is set
-api_key = os.getenv("OPENAI_API_KEY")
-if not api_key:
-    raise ValueError("OPENAI_API_KEY is not set in the environment variables.")
+# --- OLD API KEY CHECK ---
+# api_key = os.getenv("OPENAI_API_KEY")
+# if not api_key:
+#     raise ValueError("OPENAI_API_KEY is not set in the environment variables.")
+
+# +++ NEW API KEY CHECK FOR GOOGLE +++
+google_api_key = os.getenv("GOOGLE_API_KEY")
+if not google_api_key:
+    raise ValueError("GOOGLE_API_KEY is not set in the environment variables.")
+
 
 # --- 2. Define Constants ---
 DATA_PATH = "data/"
-VECTORSTORE_PATH = "vectorstore" # In a real app, you'd persist this
+VECTORSTORE_PATH = "vectorstore"
 
 # --- 3. Document Ingestion and Vector Store Creation ---
 def create_vector_store():
@@ -37,8 +47,13 @@ def create_vector_store():
     docs = text_splitter.split_documents(documents)
 
     print("Creating embeddings and building the FAISS vector store...")
-    embeddings = OpenAIEmbeddings(api_key=api_key)
-    # FAISS.from_documents can create an in-memory vector store
+    
+    # --- OLD EMBEDDINGS ---
+    # embeddings = OpenAIEmbeddings(api_key=api_key)
+    
+    # +++ NEW GOOGLE EMBEDDINGS +++
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=google_api_key)
+
     vectorstore = FAISS.from_documents(documents=docs, embedding=embeddings)
     print("Vector store created successfully.")
     
@@ -49,13 +64,14 @@ def create_rag_chain(vectorstore):
     """
     Creates the Retrieval-Augmented Generation (RAG) chain.
     """
-    # Initialize the LLM
-    llm = ChatOpenAI(api_key=api_key, model_name="gpt-3.5-turbo", temperature=0.7)
+    # --- OLD LLM ---
+    # llm = ChatOpenAI(api_key=api_key, model_name="gpt-3.5-turbo", temperature=0.7)
+    
+    # +++ NEW GOOGLE LLM +++
+    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=google_api_key, temperature=0.7)
 
-    # Create a retriever from the vector store
     retriever = vectorstore.as_retriever(search_kwargs={'k': 3})
 
-    # Define the prompt template
     template = """
     You are a helpful assistant who answers questions based on the provided context.
     Answer the user's question clearly and concisely using only the information from the context below.
@@ -72,7 +88,6 @@ def create_rag_chain(vectorstore):
     """
     prompt = ChatPromptTemplate.from_template(template)
 
-    # Build the RAG chain using LangChain Expression Language (LCEL)
     rag_chain = (
         {"context": retriever, "question": RunnablePassthrough()}
         | prompt
@@ -82,20 +97,17 @@ def create_rag_chain(vectorstore):
     
     return rag_chain
 
-# --- 5. Main Execution Block & Basic UX ---
+# --- 5. Main Execution Block & Basic UX (NO CHANGES NEEDED HERE) ---
 if __name__ == "__main__":
     print("🚀 Initializing the RAG Assistant...")
     
-    # 1. Create the vector store from the custom documents
     db = create_vector_store()
     
-    # 2. Create the RAG chain
     qa_chain = create_rag_chain(db)
     
     print("\n✅ RAG Assistant is ready. Ask your questions about the Artemis Program.")
     print("   Type 'exit' or 'quit' to end the session.")
     
-    # 3. Start the interactive CLI loop
     while True:
         user_question = input("\nYour Question: ")
         
@@ -107,7 +119,6 @@ if __name__ == "__main__":
             print("Please enter a question.")
             continue
             
-        # 4. Run the query and print the response
         print("\nThinking...")
         response = qa_chain.invoke(user_question)
         print("\nAssistant's Answer:\n" + "-"*20)
