@@ -1,0 +1,19 @@
+The Artemis Program: Returning Humanity to the Moon
+
+The Artemis program is a United States-led international human spaceflight program. Its primary goal is to return humans to the Moon, specifically the lunar south pole, by 2026. The program is executed by NASA in collaboration with U.S. commercial spaceflight companies and international partners like the European Space Agency (ESA), the Japan Aerospace Exploration Agency (JAXA), and the Canadian Space Agency (CSA).
+
+Key Objectives:
+1.  **Sustainable Lunar Exploration:** Unlike the Apollo program, Artemis aims to establish a long-term human presence on and around the Moon. This includes building a lunar base camp on the surface and the Gateway, a small space station in lunar orbit.
+2.  **Scientific Discovery:** By exploring the lunar south pole, scientists hope to study water ice located in permanently shadowed craters. This ice could be a source of drinking water, breathable air, and rocket propellant for future missions.
+3.  **Paving the Way to Mars:** The technologies, operational experience, and international partnerships developed through Artemis are considered crucial stepping stones for the next giant leap in human exploration: sending astronauts to Mars.
+
+Core Components:
+- **Space Launch System (SLS):** The super heavy-lift rocket used to launch the Orion spacecraft and other payloads from Earth. It is the most powerful rocket ever built.
+- **Orion Spacecraft:** The crew vehicle designed to carry astronauts to lunar orbit, dock with the Gateway, and return them safely to Earth.
+- **Gateway:** A lunar outpost that will orbit the Moon, serving as a command center, science lab, and short-term habitat for astronauts. It will be a critical piece of infrastructure for missions to the lunar surface and, eventually, to Mars.
+- **Human Landing System (HLS):** The landers that will transport astronauts from the Gateway or Orion in lunar orbit down to the Moon's surface and back. NASA has contracted companies like SpaceX (with its Starship HLS) and Blue Origin to develop these systems.
+
+Artemis Missions:
+- **Artemis I (Completed):** An uncrewed test flight of the SLS rocket and Orion spacecraft that orbited the Moon in late 2022 to verify the systems' performance and safety.
+- **Artemis II (Planned for 2025):** The first crewed flight of Orion, which will fly a lunar flyby mission, carrying four astronauts around the Moon before returning to Earth. This will be the first time humans have traveled beyond low Earth orbit since 1972.
+- **Artemis III (Planned for 2026):** The mission that will land the first woman and the first person of color on the Moon's south pole.
