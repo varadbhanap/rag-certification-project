@@ -1,0 +1,16 @@
+# Core LangChain libraries
+langchain
+langchain-openai
+langchain_community
+
+# Vector Store
+faiss-cpu
+
+# Document Loading
+unstructured
+
+# Environment variable management
+python-dotenv
+
+# For text splitting
+tiktoken
